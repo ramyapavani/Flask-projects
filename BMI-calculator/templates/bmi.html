@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+    <title>BMI-CALCULATOR</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+</head>
+<body>
+    <p> BMI-CALCULATOR </p>
+    <form class="pure-form" method="POST" action="/">
+        <label for="userweight"> Enter ur weight(in kgs):</label><br><br>
+        <input type="text" name="userweight" id="userweight" placeholder="type here ur weight"><br><br>
+        <label for="userheight"> Enter ur height(in cms):</label><br><br>
+        <input type="text" name="userheight" id="userheight" placeholder="type here ur height"><br><br>
+        <button type="submit" class="pure-button pure-button-primary"> Start </button>
+    </form>
+    <br>
+    <div>
+        {% if var %}
+        <p> Ur BMI value is {{var}}</p>
+        {% endif %}
+    </div>
+</body>

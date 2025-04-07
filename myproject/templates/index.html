@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My project</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+</head>
+
+<body class="main">
+  <h1> Hope You Enjoy the Vibe..🤩😅😴 </h1>
+
+  <p> Welcome to My Project...!😊 </p>
+  <p> Please enter ur Name </p>
+
+  <form class="pure-form" method="POST" action="/">
+    <label for="username">Name:</label><br><br>
+    <label for="userfood">Favfood:</label><br><br>
+    <input type="text" name="username" id="username" class="pure-input-1" placeholder="Type your name here"><br>
+    <br>
+    <input type="text" name="userfood" id="userfood" class="pure-input-1" placeholder="Type here ur fav's"><br><br>
+    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+  </form>
+  <div>
+    {% if name%}
+    <p> This is...{{name}}</p>
+    <p> My Fav Food item's are {{food}} 😋</p>
+    {% endif %}
+</body>
+</html>
+ 
