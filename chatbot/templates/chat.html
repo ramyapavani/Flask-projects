@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<head>
+    <title>💜</title>
+    <style>
+        body {
+            background-color: lightgrey;
+        }
+    </style>    
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+</head>
+<body class="chat-container ">
+<div class="left-panel">
+    <div class="logo">
+        <img src="https://looka.com/s/218012808.png" alt="project logo" class="logo-img">
+    </div>
+            <div>
+        <form method="GET" action="/">
+        <button type="submit" name="show_history" value="1" class="pure-button pure-button-secondary">📜 Past Queries</button>
+        </form>
+        <form method="GET" action="/clear_history">
+            <button type="submit" class="pure-button pure-button-warning">🗑️ Clear History</button>
+        </form>
+            </div>    
+    <div class="history-box">
+            {%if request.args.get('show_history')%}
+            <div class="past-query-buttons">
+                {% for query in queries %}
+                <form method="POST" action="/" style="display: inline;">
+                    <input type="hidden" name="userquery" value="{{ query }}">
+                    <button type="submit" class="query-btn">{{ query }}</button>
+                </form>
+                {% endfor %}
+            </div>
+            {%endif%}
+    </div>
+</div>      
+    <div class="right-panel">
+        <div class="project-header">
+            Purple_
+            <div class="chat-messages">
+                {% for message, response, timestamp in chat_history|reverse %}
+                <div class="chat-entry">
+                    <p><strong>You:</strong> {{ message }}</p>
+        <p><strong>Bot:</strong> {{ response }}</p>
+        <small>{{ timestamp }}</small>
+        <hr>
+    </div>
+    {% endfor %}
+    <div>
+        <form class="input-wrapper" method="POST" action="/">
+                <input style="border:2px solid Violet;" type="text" name="userquery" id="userquery" placeholder="Ask ur query here...." size="70">
+                <button type="submit">Ask</button>
+            </form>
+            </div>
+            <form method="GET" action="/hearts" style="display:inline;">
+                <button type="submit" class="heart-btn">💜</button>
+            </form>
+        </div>
+        {%  if not session.get('username') %}
+        <div class="auth-buttons">
+            {% if not session.get('username') %}
+        <button onclick="openModal('loginModal')">Login</button>
+        <button onclick="openModal('signupModal')">Sign Up</button>
+    {% else %}
+    <div class="user-info">
+        Welcome, {{ session['username'] }}!
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    {% endif %}
+    {% endif %}
+        </div>
+        <div id="loginModal" class="modal">
+            <div class="form-box">
+                <h2>Login</h2>
+                <form action="{{ url_for('login') }}" method="post">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <button class="close-btn" onclick="closeModal('loginModal')">Close</button>
+            </div>
+        </div>
+        <div id="signupModal" class="modal">
+            <div class="form-box">
+                <h2>Signup</h2>
+                <form action="{{ url_for('signup') }}" method="post">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit">Signup</button>
+                </form>
+                <button class="close-btn" onclick="closeModal('signupModal')">Close</button>
+            </div>
+        </div>
+    </div>
+        {% if session.get('username')%}
+        <div class="user-greeting">
+            <p class="greeting-msg">Welcome, {{ session['username'] }}! 💜</p>
+            <form action="{{ url_for('logout') }}" method="get">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+        {% endif %}
+        <div>
+            {% if show_hearts %}
+<div class="flying-hearts">
+    <span class="heart" style="left: 40%;">💜</span>
+    <span class="heart" style="left: 42%;">💜</span>
+    <span class="heart" style="left: 45%;">💜</span>
+    <span class="heart" style="left: 47%;">💜</span>
+    <span class="heart" style="left: 48%;">💜</span>
+    <span class="heart" style="left: 50%;">💜</span>
+    <span class="heart" style="left: 52%;">💜</span>
+    <span class="heart" style="left: 54%;">💜</span>
+    <span class="heart" style="left: 56%;">💜</span>
+    <span class="heart" style="left: 58%;">💜</span>
+    <span class="heart" style="left: 60%;">💜</span>
+    <span class="heart" style="left: 62%;">💜</span>
+    <span class="heart" style="left: 64%;">💜</span>
+</div>
+{% endif %}
+</div>
+</div>
+<div>
+<script>
+    function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+    }
+    
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+    </script>
+</div>
+<div class="chat-area">
+    {% for message, response, timestamp in chat_history %}
+    <div class="chat-entry">
+        <p><strong>You:</strong> {{ message }}</p>
+        <p><strong>Bot:</strong> {{ response }}</p>
+        <small>{{ timestamp }}</small>
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+</body>
